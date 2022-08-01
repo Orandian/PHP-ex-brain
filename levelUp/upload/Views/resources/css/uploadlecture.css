@@ -1,0 +1,171 @@
+body {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+}
+.sidebar {
+  width: 20%;
+  height: 100%;
+  background-color: black;
+}
+.container {
+  width: 80%;
+  height: 100%;
+  padding: 2em;
+  background-color: #fff;
+}
+.container form {
+  width: 100%;
+  height: 100%;
+}
+.container form {
+  display: flex;
+  position: relative;
+}
+.container form .left {
+  padding: 0 2em 0 0;
+  width: 50%;
+  height: 100%;
+}
+.container form .left input {
+  margin: 1em 0;
+  width: 100%;
+  padding: 0.5em 1em;
+  border: 2px solid #000;
+  border-radius: 10px;
+}
+.container form .left input:focus {
+  outline: none;
+}
+.container form .centerbar {
+  position: absolute;
+  width: 2px;
+  height: 90%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.container form .right {
+  position: relative;
+  padding: 0 0 0 2em;
+  width: 50%;
+  height: 100%;
+}
+.container form .right .quizzAdd {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.container form .right .quizzs .quizz {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1.5em;
+}
+.container form .right .quizzs .quizz .edit {
+  display: flex;
+  align-items: center;
+  align-items: center;
+}
+.container form .right .quizzs .quizz .edit a {
+  margin: 0 1em;
+}
+.container form .right .buttons {
+  position: absolute;
+  bottom: 1em;
+  right: 1em;
+}
+.form-input {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  border-radius: 10px;
+  background-color: #d9d9d9;
+  overflow: hidden;
+  margin-bottom: 1.5em;
+}
+.form-input video {
+  width: 100%;
+  display: none;
+}
+.form-input input {
+  display: none;
+}
+.form-input label {
+  position: absolute;
+  display: block;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: rgba(0, 0, 0, 0.8);
+  font-size: 15px;
+  text-decoration: underline;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.container form .quizzBox {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 1em 1.5em;
+  width: 400px;
+  background: #fff;
+  border: 2px solid #000;
+  border-radius: 20px;
+  display: none;
+}
+.container form .quizzBox p {
+  margin-bottom: 1em;
+}
+.container form .quizzBox input {
+  margin: 1em 0;
+  width: 100%;
+  padding: 0.5em 1em;
+  border: 2px solid #000;
+  border-radius: 10px;
+}
+.container form .quizzBox .answer {
+  padding: 0.5em 0;
+  display: flex;
+  align-items: center;
+}
+.container form .quizzBox .answer select {
+  margin-left: 2em;
+  padding: 0.5em 1em;
+  border: 2px solid #000;
+  border-radius: 10px;
+}
+.container form .quizzBox .buttons {
+  float: right;
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    padding-bottom: 0;
+  }
+  .container form {
+    display: block;
+    overflow-y: auto;
+  }
+  .container form::-webkit-scrollbar {
+    display: none;
+  }
+  .container form .centerbar {
+    display: none;
+  }
+  .container form .left,
+  .container form .right {
+    width: 100%;
+    padding: 0;
+  }
+  .container form .right .quizzBox {
+    width: 320px;
+    height: 70%;
+  }
+  .container form .right .buttons {
+    bottom: 0;
+  }
+}

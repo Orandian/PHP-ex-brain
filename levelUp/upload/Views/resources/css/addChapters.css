@@ -1,0 +1,75 @@
+body {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+}
+.sidebar {
+  width: 20%;
+  height: 100%;
+  background-color: black;
+}
+.container {
+  width: 80%;
+  height: 100%;
+  background-color: #fff;
+}
+.container form {
+  padding: 2em;
+  width: 70%;
+  height: 100%;
+}
+.container form input {
+  width: 100%;
+  padding: 0.5em 1em;
+  border: 2px solid #000;
+  border-radius: 10px;
+  margin: 1em 0;
+}
+.container form input:focus {
+  outline: none;
+}
+.container form .lectures {
+  margin: 1em 0;
+  border: 2px solid #000;
+  padding: 1em;
+  border-radius: 20px;
+}
+.container form .lectures .bar {
+  display: flex;
+  justify-content: space-between;
+}
+.container form .lectures .listbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1em;
+}
+.container form .lectures .lectureList {
+  height: 200px;
+  overflow-y: auto;
+}
+.container form .lectures .lectureList::-webkit-scrollbar {
+  display: none;
+}
+.container form .lectures .lectureList a {
+  color: #000;
+}
+.container form .lectures .lectureList a .lecture {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5em 1em;
+  margin: 0.5em 0;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+}
+.container form .lectures .lectureList a .lecture:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+.container form .buttons {
+  float: right;
+}
+
+@media screen and (max-width: 768px) {
+  .container form {
+    width: 100%;
+  }
+}
