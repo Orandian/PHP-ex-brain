@@ -2,8 +2,8 @@
 $time = time();
 session_start();
 
-echo $_SESSION['instructorId'];
-echo $_SESSION['courseId'];
+// echo $_SESSION['instructorId'];
+// echo $_SESSION['courseId'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -46,7 +46,7 @@ echo $_SESSION['courseId'];
 
         <div class="additional">
           <p>Benefits</p>
-          <a href="#" onclick="addBenefit()">Add</a>
+          <p onclick="addBenefit()">Add</p>
         </div>
 
         <div class="benefitList">
@@ -64,7 +64,7 @@ echo $_SESSION['courseId'];
 
         <div class="additional">
           <p>Pre-requisites</p>
-          <a href="#" onclick="addRequirement()">Add</a>
+          <p onclick="addRequirement()">Add</p>
         </div>
 
         <div class="requirementList">
@@ -95,12 +95,14 @@ echo $_SESSION['courseId'];
       <!-- Start Right Side -->
       <div class="right">
         <div class="chapterBar">
-          <a href="../Controllers/uploadChapterController.php" class="button">Add Chapters</a>
+          <a href="../Controller/uploadChapterController.php" class="button">Add Chapters</a>
         </div>
 
-        <div class="chapters">
+        <div class="chapters" id="chapters">
           <?php
-          require_once "../Controllers/showChapterController.php";
+          $page = 0;
+          // $delete = 1;
+          require_once "../Controller/showChapterController.php";
 
           foreach ($result as $key => $value) {
             echo "<a href='#'>";
@@ -126,11 +128,11 @@ echo $_SESSION['courseId'];
           <input type="file" accept="image/*" onchange="showPreview(event);" id="courseCoverImage" />
         </div>
 
-        <label for="">Course Price</label><br />
-        <input type="text" id="coursePrice" /><br />
+        <label for="coursePrice">Course Price (Kyats)</label><br />
+        <input type="number" id="coursePrice" placeholder="0" /><br />
 
-        <label for="">Course Duration</label><br />
-        <input type="text" id="courseDuration" /><br />
+        <label for="courseDuration">Course Duration (Hours)</label><br />
+        <input type="number" id="courseDuration" placeholder="0" /><br />
 
         <label for="">Level</label><br />
         <select name="example" id="courseLevel">
@@ -166,8 +168,8 @@ echo $_SESSION['courseId'];
         <span id="promotedPrice">0</span>
 
         <div class="buttons">
-          <a href="../Controllers/cancelUploadCourseController.php" class="button">Cancel</a>
-          <span class="button" onclick="uploadCourse()">Save</span>
+          <a href="../Controller/cancelUploadCourseController.php" class="button">Cancel</a>
+          <button class="button" onclick="uploadCourse()" id="saveCourseButton" disabled>Save</button>
         </div>
       </div>
       <!-- End Right Side -->
@@ -179,8 +181,8 @@ echo $_SESSION['courseId'];
       <input type="text" id="benefit" />
 
       <div class="buttons">
-        <div class="button" onclick="closeBenefitBox()">Cancel</div>
-        <div class="button" onclick="addBenefitData()">Save</div>
+        <button class="button" onclick="closeBenefitBox()">Cancel</button>
+        <button class="button" onclick="addBenefitData()" id="saveBenefitButton" disabled>Save</button>
       </div>
     </div>
     <!-- End Benefit Box -->
@@ -191,13 +193,25 @@ echo $_SESSION['courseId'];
       <input type="text" id="requirement" />
 
       <div class="buttons">
-        <div class="button" onclick="closeRequirementBox()">Cancel</div>
-        <div class="button" onclick="addRequirementData()">Save</div>
+        <button class="button" onclick="closeRequirementBox()">Cancel</button>
+        <button class="button" onclick="addRequirementData()" id="saveRequirementButton" disabled>Save</button>
       </div>
     </div>
     <!-- End Benefit Box -->
   </div>
   <!-- ================== END FORM CONTAINER ===================== -->
+
+  <script type="text/javascript">
+    function preventBack() {
+      window.history.forward();
+    }
+
+    setTimeout("preventBack()", 0);
+
+    window.onunload = function() {
+      null
+    };
+  </script>
 
 </body>
 

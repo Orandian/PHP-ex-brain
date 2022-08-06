@@ -1,6 +1,6 @@
 <?php
 
-require_once "../Model/DBConnection.php";
+require_once "../Model/dbConnection.php";
 
 $db = new DBConnect();
 $connection = $db->Connect();
@@ -12,32 +12,34 @@ $courseId = $_SESSION['courseId'];
 if (count($_POST)) {
     $data = json_decode($_POST["send"], true);
 
-    $benefit = $data['benefit'];
+    $requirement = $data['requirement'];
 
     $sql = $connection->prepare("
-        INSERT INTO t_benefits(
+        INSERT INTO t_requirements(
             instructorId,
             courseId,
-            benefits
+            requirements
         )VALUES(
-            $instructorId,
-            $courseId,
-            :benefit
+            :instructorId,
+            :courseId,
+            :requirement
         );
     ");
 
-    $sql->bindValue(":benefit", $benefit);
+    $sql->bindValue(":instructorId", $instructorId);
+    $sql->bindValue(":courseId", $courseId);
+    $sql->bindValue(":requirement", $requirement);
     $sql->execute();
 
     // get select all data from database
-    $sql = $connection->prepare("SELECT * FROM t_benefits WHERE instructorId = $instructorId AND courseId = $courseId;");
+    $sql = $connection->prepare("SELECT * FROM t_requirements WHERE instructorId = $instructorId AND courseId = $courseId;");
     $sql->execute();
     $result = $sql->fetchAll(PDO::FETCH_ASSOC);
 
     echo json_encode($result);
 } else {
     // get select all data from database
-    $sql = $connection->prepare("SELECT * FROM t_benefits WHERE instructorId = $instructorId AND courseId = $courseId;");
+    $sql = $connection->prepare("SELECT * FROM t_requirements WHERE instructorId = $instructorId AND courseId = $courseId;");
     $sql->execute();
     $result = $sql->fetchAll(PDO::FETCH_ASSOC);
 

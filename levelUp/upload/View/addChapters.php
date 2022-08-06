@@ -1,10 +1,14 @@
 <?php
 $time = time();
 
+$page = 1;
 session_start();
 
-echo $_SESSION['instructorId'];
-echo $_SESSION['courseId'];
+// echo $_SESSION['instructorId'];
+// echo $_SESSION['courseId'];
+// echo $_SESSION['chapterId'];
+
+$_SESSION['currentPage'] = 0;
 ?>
 
 <!DOCTYPE html>
@@ -36,12 +40,11 @@ echo $_SESSION['courseId'];
             <p class="is-size-3 has-text-weight-bold">Chapter
                 <span id="chapterId">
                     <?php
-                    require_once "../Controllers/showChapterController.php";
-                    // require_once "./uploadChapterController.php";
+                    require_once "../Controller/showChapterController.php";
 
                     echo $chapterNo;
 
-                    $_SESSION['chapterNo'] = $chapterNo;
+                    // $_SESSION['chapterNo'] = $chapterNo;
                     ?>
                 </span>
             </p>
@@ -51,7 +54,7 @@ echo $_SESSION['courseId'];
             <div class="lectures">
                 <div class="bar">
                     <p class="is-size-5 has-text-weight-bold">Lectures</p>
-                    <a href="../Controllers/uploadLectureController.php">
+                    <a href="../Controller/uploadLectureController.php">
                         <!-- <a href="./uploadLectureController.php"> -->
                         <div class="button is-primary">Add</div>
                     </a>
@@ -64,14 +67,16 @@ echo $_SESSION['courseId'];
                 <hr />
                 <div class="lectureList" id="lectureList">
                     <?php
-                    require "../Controllers/showLectureController.php";
+
+                    // $delete = 1;
+                    require "../Controller/showLectureController.php";
                     // require "./showLectureController.php";
 
                     foreach ($result as $key => $value) {
                         echo "<a href='#' class='lectureNo'>";
                         echo "<div class='lecture'>";
                         echo "<p>" . $value["lectureTitle"] . "</p>";
-                        echo "<p>20/6/2022</p>";
+                        echo "<p>" . $value["updatedDate"] . "</p>";
                         echo "</div>";
                         echo "</a>";
                     };
@@ -86,12 +91,24 @@ echo $_SESSION['courseId'];
             </div>
 
             <div class="buttons">
-                <a href="../Controllers/cancelAddChaptersController.php" class="button">Cancel</a>
-                <div class="button" id="addChapter">Save</div>
+                <a href="../Controller/cancelAddChaptersController.php" class="button">Cancel</a>
+                <button class="button" id="addChapter" disabled>Save</button>
             </div>
         </form>
 
     </div>
+
+    <script type="text/javascript">
+        function preventBack() {
+            window.history.forward();
+        }
+
+        setTimeout("preventBack()", 0);
+
+        window.onunload = function() {
+            null
+        };
+    </script>
 </body>
 
 </html>

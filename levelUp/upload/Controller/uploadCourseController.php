@@ -1,8 +1,7 @@
 <?php
 session_start();
 
-require_once "../Model/DBConnection.php";
-// require_once "./DBConnection.php";
+require_once "../Model/dbConnection.php";
 
 $db = new DBConnect();
 $connection = $db->Connect();

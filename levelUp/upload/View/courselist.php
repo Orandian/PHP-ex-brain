@@ -3,7 +3,7 @@ $time = time();
 
 session_start();
 
-session_destroy();
+// session_destroy();
 ?>
 
 <!DOCTYPE html>
@@ -26,13 +26,14 @@ session_destroy();
     <section class="section">
         <div class="header">
             <h2 class="is-size-4 has-text-weight-bold">My Courses</h2>
-            <a href="../Controllers/uploadNewCourseController.php" class=" button is-primary is-one-fifth">Add New Course</a>
+            <a href="../Controller/uploadNewCourseController.php" class=" button is-primary is-one-fifth">Add New Course</a>
         </div>
 
         <div class="card-container">
             <?php
+            // $delete = 1;
             // require_once "./showCourseListController.php";
-            require_once "../Controllers/showCourseListController.php";
+            require_once "../Controller/showCourseListController.php";
 
             foreach ($result as $key => $value) {
             ?>
@@ -58,7 +59,7 @@ session_destroy();
                                 <ion-icon name="bar-chart-outline"></ion-icon>
                                 <div class="content">
                                     <span>Lectures</span>
-                                    <h4><?php echo $result1[0]['lectureNumber']; ?> Lectures</h4>
+                                    <h4><?php echo $result1[$key]['lectureNumber']; ?> Lectures</h4>
                                 </div>
                             </div>
                         </div>
@@ -75,46 +76,20 @@ session_destroy();
             <?php
             }
             ?>
-            <!-- <a href="#">
-                <div class="cards">
-                    <img src="./image.png" alt="" />
-                    <div class="details">
-                        <div class="detail">
-                            <ion-icon name="bar-chart-outline"></ion-icon>
-                            <div class="content">
-                                <span>Level</span>
-                                <h4>Intermediate</h4>
-                            </div>
-                        </div>
-                        <div class="detail">
-                            <ion-icon name="bar-chart-outline"></ion-icon>
-                            <div class="content">
-                                <span>Hours</span>
-                                <h4>6 Hours</h4>
-                            </div>
-                        </div>
-                        <div class="detail">
-                            <ion-icon name="bar-chart-outline"></ion-icon>
-                            <div class="content">
-                                <span>Lectures</span>
-                                <h4>10 Lectures</h4>
-                            </div>
-                        </div>
-                    </div>
-                    <h2>Importanes of Wireframes: Learn
-                        to Make for Better Design</h2>
-                    <div class="info">
-                        <p class="has-text-weight-bold">2 days ago</p>
-                        <a href="#" class="title is-6 has-text-weight-bold">Edit</a>
-                    </div>
-                    <div class="rating">
-                        <ion-icon name="bar-chart-outline"></ion-icon>
-                        <p class="has-text-weight-bold">4.6/5</p>
-                    </div>
-                </div>
-            </a> -->
         </div>
     </section>
+
+    <script type="text/javascript">
+        function preventBack() {
+            window.history.forward();
+        }
+
+        setTimeout("preventBack()", 0);
+
+        window.onunload = function() {
+            null
+        };
+    </script>
 </body>
 
 </html>

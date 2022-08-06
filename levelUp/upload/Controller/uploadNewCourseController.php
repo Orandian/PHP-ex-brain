@@ -1,6 +1,6 @@
 <?php
 
-require_once "../Model/DBConnection.php";
+require_once "../Model/dbConnection.php";
 
 $db = new DBConnect();
 $connection = $db->Connect();
@@ -36,4 +36,4 @@ $courseId = $result[0]["courseId"];
 
 $_SESSION['courseId'] = $courseId;
 
-header("Location: ../Views/uploadCourse.php");
+header("Location: ../View/uploadCourse.php");

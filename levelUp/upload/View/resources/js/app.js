@@ -12,7 +12,7 @@ function addRequirementData() {
 
   $.ajax({
     // url: "./uploadRequirementsController.php",
-    url: "../Controllers/uploadRequirementsController.php",
+    url: "../Controller/uploadRequirementsController.php",
     type: "POST",
     data: { send: JSON.stringify(postData) },
     success: function (res) {
@@ -20,7 +20,7 @@ function addRequirementData() {
       let requirementData = JSON.parse(res);
 
       for (const requirement of requirementData) {
-        addRequirementList(requirement.requirements);
+        addRequirementList(requirement.requirements, requirement.id);
       }
     },
     error: function (err) {
@@ -30,13 +30,13 @@ function addRequirementData() {
 }
 
 function addRequirementInit() {
-  $.get("../Controllers/uploadRequirementsController.php", function (data) {
+  $.get("../Controller/uploadRequirementsController.php", function (data) {
     // Display the returned data in browser
     // console.log(data);
     let requirementData = JSON.parse(data);
 
     for (const requirement of requirementData) {
-      addRequirementList(requirement.requirements);
+      addRequirementList(requirement.requirements, requirement.id);
     }
   });
 }
@@ -47,7 +47,7 @@ function addBenefitData() {
   };
 
   $.ajax({
-    url: "../Controllers/uploadBenefitsController.php",
+    url: "../Controller/uploadBenefitsController.php",
     type: "POST",
     data: { send: JSON.stringify(postData) },
     success: function (res) {
@@ -57,7 +57,7 @@ function addBenefitData() {
       // console.log(benefitData);
 
       for (const benefit of benefitData) {
-        addBenefitList(benefit.benefits);
+        addBenefitList(benefit.benefits, benefit.id);
       }
     },
     error: function (err) {
@@ -67,11 +67,11 @@ function addBenefitData() {
 }
 
 function addBenefitInit() {
-  $.get("../Controllers/uploadBenefitsController.php", function (data) {
+  $.get("../Controller/uploadBenefitsController.php", function (data) {
     let benefitData = JSON.parse(data);
 
     for (const benefit of benefitData) {
-      addBenefitList(benefit.benefits);
+      addBenefitList(benefit.benefits, benefit.id);
     }
   });
 }
@@ -93,7 +93,7 @@ function uploadCourse() {
   form_data.append("coursePromotedPrice", $("#promotedPrice").text());
 
   $.ajax({
-    url: "../Controllers/uploadCourseController.php",
+    url: "../Controller/uploadCourseController.php",
     type: "POST",
     contentType: false,
     cache: false,
@@ -147,6 +147,16 @@ function calculatePromotedPrice(percentage) {
   }
 }
 
+$("#coursePrice").blur(function () {
+  var coursePrice = +$(this).val();
+  var percentage = +$("#number").text();
+  var promotion = 0;
+
+  promotion = coursePrice - Math.round((coursePrice / 100) * percentage);
+
+  $("#promotedPrice").text(promotion);
+});
+
 function addBenefit() {
   document.getElementById("benefitBox").style.display = "block";
 }
@@ -165,14 +175,14 @@ function closeRequirementBox() {
   document.getElementById("requirement").value = "";
 }
 
-function addBenefitList(benefit) {
+function addBenefitList(benefit, benefitId) {
   benelists.innerHTML += `
   <li>
     <span class="benefitData">
       ${benefit}
     </span>
     <span>
-      <ion-icon name="trash-bin" onclick="trash(this)"></ion-icon>
+      <ion-icon name="trash-bin" onclick="deleteBenefit(this)" id=${benefitId}></ion-icon>
     </span>
   </li>
   `;
@@ -181,52 +191,111 @@ function addBenefitList(benefit) {
   closeBenefitBox();
 }
 
-function addRequirementList(requirement) {
+function addRequirementList(requirement, requirementId) {
   reqlists.innerHTML += `
       <li>
       <span class="requirementData">
         ${requirement}
       </span>
       <span>
-        <ion-icon name="trash-bin" onclick="trash(this)"></ion-icon>
+      
+        <ion-icon name="trash-bin" onclick="deleteRequirement(this)" id=${requirementId}></ion-icon>
       </span>
       </li>
     `;
   requirement.value = "";
   closeRequirementBox();
-  // updateRequirementlocalstorage();
 }
 
-// function updateBenefitlocalstorage() {
-//   let benefits = document.querySelectorAll(".benefitData");
-
-//   const benefitDatas = [];
-
-//   benefits.forEach((benefit) => {
-//     benefitDatas.push({
-//       benefits: benefit.innerText,
-//     });
-//   });
-
-//   localStorage.setItem("benefits", JSON.stringify(benefitDatas));
-// }
-
-// function updateRequirementlocalstorage() {
-//   let requirements = document.querySelectorAll(".requirementData");
-
-//   const requirementDatas = [];
-
-//   requirements.forEach((requirement) => {
-//     requirementDatas.push({
-//       requirements: requirement.innerText,
-//     });
-//   });
-
-//   localStorage.setItem("requirements", JSON.stringify(requirementDatas));
-// }
-
-function trash(e) {
+function deleteBenefit(e) {
   e.parentElement.parentElement.remove();
-  // updateBenefitlocalstorage();
-  // updateRequirementlocalstorage();
+
+  let postData = {
+    id: e.id,
+  };
+
+  $.ajax({
+    // url: "./uploadRequirementsController.php",
+    url: "../Controller/deleteBenefitController.php",
+    type: "POST",
+    data: { send: JSON.stringify(postData) },
+    success: function (res) {
+      location.url = res;
+    },
+    error: function (err) {
+      console.log(err);
+    },
+  });
+}
+
+function deleteRequirement(e) {
+  e.parentElement.parentElement.remove();
+
+  let postData = {
+    id: e.id,
+  };
+
+  $.ajax({
+    url: "../Controller/deleteRequirementController.php",
+    type: "POST",
+    data: { send: JSON.stringify(postData) },
+    success: function (res) {
+      location.url = res;
+    },
+    error: function (err) {
+      console.log(err);
+    },
+  });
+}
+
+// FORM VALIDATION
+$(document).mousemove(function () {
+  activeCourseButton();
+});
+
+$(document).click(function () {
+  activeCourseButton();
+});
+
+$("#benefitBox").mousemove(activeBenefitButton);
+
+$("#benefitBox").click(activeBenefitButton);
+
+$("#requirementBox").mousemove(activeRequirementButton);
+
+$("#requirementBox").click(activeRequirementButton);
+
+function activeCourseButton() {
+  if (
+    $("#courseTitle").val() !== "" &&
+    $("#aboutCourse").val() !== "" &&
+    benelists.innerText !== "" &&
+    reqlists.innerText !== "" &&
+    $("#courseDescription").val() !== "" &&
+    $("#whoCourse").val() !== "" &&
+    $("#chapters").prop("innerText") !== "" &&
+    $("#preview").prop("src") !== "" &&
+    $("#coursePrice").val() !== "" &&
+    $("#courseDuration").val() !== ""
+  ) {
+    $("#saveCourseButton").removeAttr("disabled");
+  } else {
+    $("#saveCourseButton").attr("disabled", true);
+  }
+}
+
+function activeBenefitButton() {
+  if ($("#benefit").val() !== "") {
+    $("#saveBenefitButton").removeAttr("disabled");
+  } else {
+    $("#saveBenefitButton").attr("disabled", true);
+  }
+}
+
+function activeRequirementButton() {
+  if ($("#requirement").val() !== "") {
+    $("#saveRequirementButton").removeAttr("disabled");
+  } else {
+    $("#saveRequirementButton").attr("disabled", true);
+  }
 }

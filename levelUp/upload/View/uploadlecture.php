@@ -3,10 +3,10 @@ $time = time();
 
 session_start();
 
-echo $_SESSION['instructorId'];
-echo $_SESSION['courseId'];
-echo $_SESSION['chapterId'];
-echo $_SESSION['lectureId'];
+// echo $_SESSION['instructorId'];
+// echo $_SESSION['courseId'];
+// echo $_SESSION['chapterId'];
+// echo $_SESSION['lectureId'];
 ?>
 
 <!DOCTYPE html>
@@ -32,35 +32,38 @@ echo $_SESSION['lectureId'];
     <div class="sidebar">
     </div>
     <div class="container">
-        <form action="../Controllers/uploadLectureController.php" method="POST" enctype="multipart/form-data">
+        <form action="../Controller/uploadLectureController.php" method="POST" enctype="multipart/form-data">
             <div class="left">
                 <div class="form-input">
                     <div class="preview">
-                        <video id="file-ip-1-preview" />
+                        <video id="videoPreview" />
                     </div>
-                    <label for="file-ip-1" class="has-text-weight-bold">Add Video</label>
-                    <input type="file" id="file-ip-1" accept="video/*" onchange="showPreview(event)" name="video" />
+                    <label for="video" class="has-text-weight-bold">Add Video</label>
+                    <input type="file" id="video" accept="video/*" onchange="showPreview(event)" name="video" />
                 </div>
+
                 <label for="">Lecture Title</label><br />
                 <input type="text" placeholder="lecture title" id="lectureTitle" name="lectureTitle" /><br />
+
                 <label for="">Lecture Description</label><br />
-                <input type="text" placeholder="lecture Description" id="lectureDescription" name="lectureDescription" /><br />
+                <textarea name="lectureDescription" id="lectureDescription"></textarea><br />
+
                 <label for="">Lecture Scripts</label><br />
-                <input type="text" placeholder="lecture Scripts" id="lectureScripts" name="lectureScripts" />
+                <textarea name="lectureScripts" id="lectureScripts"></textarea><br />
             </div>
             <div class="centerbar"></div>
             <div class="right">
                 <div class="quizzAdd">
                     <p>Lecture Quizzes</p>
-                    <a href="#" onclick="openQuizzBox()">Add</a>
+                    <p onclick="openQuizzBox()">Add</p>
                 </div>
 
                 <div class="quizzs" id="quizzs">
                 </div>
 
                 <div class="buttons">
-                    <a href="../Controllers/cancelLectureController.php" class="button">Cancel</a>
-                    <input type="submit" class="button" value="Save" />
+                    <a href="../Controller/cancelLectureController.php" class="button">Cancel</a>
+                    <button type="submit" class="button" id="saveLectureButton" disabled>Save</button>
                 </div>
 
                 <div class="quizzBox" id="quizzBox">
@@ -82,7 +85,7 @@ echo $_SESSION['lectureId'];
 
                         <div class="buttons">
                             <div class="button" onclick="closeQuizzBox()">Cancel</div>
-                            <div class="button" onclick="addQuizz()" id="addQuizz">Save</div>
+                            <div class="button" onclick="addQuizz()" id="addQuizz" disabled>Save</div>
                         </div>
                     </div>
                 </div>

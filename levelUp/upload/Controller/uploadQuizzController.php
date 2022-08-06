@@ -1,6 +1,6 @@
 <?php
 
-require_once "../Model/DBConnection.php";
+require_once "../Model/dbConnection.php";
 
 $db = new DBConnect();
 $connection = $db->Connect();
@@ -10,7 +10,7 @@ session_start();
 $instructorId = $_SESSION["instructorId"];
 $courseId = $_SESSION['courseId'];
 $chapterId = $_SESSION["chapterId"];
-$lectureId = $_SESSION["lectureId"];
+$lectureId = $_SESSION['lectureId'];
 
 if (count($_POST)) {
     $data =  json_decode($_POST["send"], true);
@@ -33,10 +33,10 @@ if (count($_POST)) {
                 answer3,
                 realAnswer
             )VALUES(
-                $instructorId,
-                $courseId,
-                $chapterId,
-                $lectureId,
+                :instructorId,
+                :courseId,
+                :chapterId,
+                :lectureId,
                 :question,
                 :answer1,
                 :answer2,
@@ -45,6 +45,10 @@ if (count($_POST)) {
             );
     ");
 
+    $sql->bindValue(":instructorId", $instructorId);
+    $sql->bindValue(":courseId", $courseId);
+    $sql->bindValue(":chapterId", $chapterId);
+    $sql->bindValue(":lectureId", $lectureId);
     $sql->bindValue(":question", $question);
     $sql->bindValue(":answer1", $answer1);
     $sql->bindValue(":answer2", $answer2);
